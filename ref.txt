@@ -1,0 +1,15 @@
+######### Reseau de neuronnes/architecture
+
+######### Retropropagation
+
+https://pagesperso.litislab.fr/cchatelain/wp-content/uploads/sites/8/2018/02/neuralnetworks_part1-2018.pdf
+
+http://neuralnetworksanddeeplearning.com/chap2.html
+
+https://ai.stackexchange.com/questions/11667/is-back-propagation-applied-for-each-data-point-or-for-a-batch-of-data-points
+
+https://ai.stackexchange.com/questions/20377/what-exactly-is-averaged-when-doing-batch-gradient-descent/20380#20380
+
+######### Algorithme d'Adam
+
+https://gist.github.com/LayanCS/8bc7b0ec110487dd1e485c809954b044
