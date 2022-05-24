@@ -25,26 +25,45 @@ def exactPriceCallBS(S0, r, sg, T, K):
 
     return C
 
-NData = 20000 
+NData = 50000 
 Nsize = 6 #5 paramètres du Call + 1 sortie de référence
 
 DataBase = np.zeros((Nsize,NData))
 
+
+#### On génère aléatoirement des paramètres
+S0 = np.random.uniform(0.0, 150.0, (NData))
+r = np.random.uniform(0.0, 0.05, (NData))
+sg = np.random.uniform(0.0, 0.3, (NData))
+T = np.random.uniform(1.0, 10.0, (NData))
+K = np.random.uniform(0.0, 150.0, (NData))
+
+#### 
+DataBase[0,:] = S0
+DataBase[1,:] = r
+DataBase[2,:] = sg
+DataBase[3,:] = T
+DataBase[4,:] = K
+
 for i in range(NData):
-    #### On génère aléatoirement des paramètres
-    S0 = np.random.uniform(0.0, 150.0)
-    r = np.random.uniform(0.0, 0.05)
-    sg = np.random.uniform(0.0, 0.3)
-    T = np.random.uniform(0.0, 1.0)
-    K = np.random.uniform(0.0, 150.0)
+    DataBase[5,i] = exactPriceCallBS(S0[i], r[i], sg[i], T[i], K[i])
 
-    C = exactPriceCallBS(S0, r, sg, T, K)
-    #### 
-    DataBase[0,i] = S0
-    DataBase[1,i] = r
-    DataBase[2,i] = sg
-    DataBase[3,i] = T
-    DataBase[4,i] = K
-    DataBase[5,i] = C
+# Normalisation des données
+MeanData = np.mean(DataBase, axis=1)
+StdDevData = np.std(DataBase, axis=1)
 
-np.savetxt('DataBaseCall', DataBase)
+mu = np.outer(MeanData, np.ones(NData))
+std_dev = np.outer(StdDevData, np.ones(NData))
+
+assert(np.shape(DataBase) == np.shape(mu))
+assert(np.shape(DataBase) == np.shape(std_dev))
+
+DataBase = (DataBase - mu)/std_dev
+
+print("Moyenne : ", np.mean(DataBase, axis=1))
+print("Écart-type : ", np.std(DataBase, axis=1))
+
+# Sauvegarde des données
+np.savetxt('MeanData.txt', MeanData)
+np.savetxt('StdDevData.txt', StdDevData)
+np.savetxt('DataBaseCall.txt', DataBase)
